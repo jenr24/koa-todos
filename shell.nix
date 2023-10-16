@@ -5,5 +5,6 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
+    source .env
   '';
 }
