@@ -1,4 +1,4 @@
-const Koa = require('koa');
+import Koa from 'koa';
 export const app = new Koa();
 
 app.use(async ctx => {

@@ -4,7 +4,8 @@
   "description": "Todo Application using NodeJS + Nix",
   "main": "src/server.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src -d lib"
   },
   "author": "",
   "license": "ISC",
@@ -12,10 +13,16 @@
     "koa": "^2.14.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "jest": "^29.7.0",
     "supertest": "^6.3.3"
   },
   "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
     "moduleFileExtensions": [
       "js",
       "jsx",
