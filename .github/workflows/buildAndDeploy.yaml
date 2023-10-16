@@ -2,8 +2,8 @@ name: 'Build and deploy with terraform'
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
 
 env:
   AWS_REGION: us-east-2
