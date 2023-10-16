@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  IAM_ROLE_ARN: arn:aws:iam::xxxxxxxxxxxx:role/github_actions # Change to github action role arn
+  IAM_ROLE_ARN: arn:aws:iam::712038646678:role/github_actions # Change to github action role arn
 
 permissions:
   id-token: write # This is required for requesting the JWT
