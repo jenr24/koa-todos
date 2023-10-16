@@ -1,4 +1,4 @@
-### Koa Todos
+# Koa Todos
 
 Simple Todo Application using Koajs!
 
@@ -8,12 +8,12 @@ The nix shell will get you all the tools you need to get started
 run `nix-shell` with nix installed to enter the environment
 
 
-# Test and Build
+## Test and Build
 
 you can test the app by running `npm run test` in the development environment
 you can build the app with `npm run build`
 
-# Terraform
+### Terraform
 The `_terraform` directory contains infrastructure definitions required to run this app on AWS
 
 <hr>
@@ -28,7 +28,7 @@ enter the `_terraform` directory and run `terraform init` from the `nix-shell` t
 you will need to change some variables in `_terraform/variables.tf` to use this deployment yourself
 you will also need to change the availablity zones in `_terraform/main.tf` as well as the repository mentioned in the iam policy
 
-# Github Actions
+#### Github Actions
 The `buildAndDeploy.yaml` GitHub workflow will update the production deployment of the app
 
 <hr>
