@@ -17,7 +17,7 @@ export default (() => {
         return Knex({
           client: 'pg',
           connection: {
-            connectionString: `postgres://${process.env.PG_USERNAME}:${process.env.PG_PASSWD}@todos:5432`,
+            connectionString: `postgres://${process.env.TF_VAR_PG_USERNAME}:${process.env.TF_VAR_PG_PASSWD}@terraform-20231017184024200600000001.cko0t6ezl5s0.us-east-2.rds.amazonaws.com:5432/todos`,
           },
           migrations: {
             tableName: 'migrations'

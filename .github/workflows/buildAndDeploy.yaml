@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Build Docker Image
+    name: Update Production Container
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +42,7 @@ jobs:
           docker image push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
   terraform:
-    name: Terraform Apply
+    name: Update Production Infrastructure
     needs: build
     runs-on: ubuntu-latest
     environment: production
