@@ -1,13 +1,5 @@
 // Update with your config settings.
 
-const PG_CONNECTION_STRING = (() => {
-  if (process.env.PG_CONNECTION_STRING) {
-      return process.env.PG_CONNECTION_STRING
-  } else {
-      return ""
-  }
-});
-
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -24,7 +16,7 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      connectionString: PG_CONNECTION_STRING()
+      connectionString: `postgres://${process.env.TF_VAR_PG_USERNAME}:${process.env.TF_VAR_PG_PASSWD}@todos:5432`,
     },
     pool: {
       min: 2,
@@ -38,7 +30,7 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      connectionString: PG_CONNECTION_STRING()
+      connectionString: `postgres://${process.env.TF_VAR_PG_USERNAME}:${process.env.TF_VAR_PG_PASSWD}@todos:5432`,
     },
     pool: {
       min: 2,

@@ -8,6 +8,7 @@ on:
 env:
   AWS_REGION: us-east-2
   IAM_ROLE_ARN: arn:aws:iam::712038646678:role/github_actions # Change to github action role arn
+  NODE_ENV: production
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -82,3 +83,21 @@ jobs:
       - name: Terraform Apply
         working-directory: ./.terraform
         run: terraform apply -var="image_tag=$GITHUB_REF_NAME" -var="pg_username=$TF_VAR_PG_USERNAME" -var="pg_password=TF_VAR_PG_PASSWORD" -auto-approve
+
+  migrate:
+    name: Migrate Production Database
+    runs-on: ubuntu-latest
+    needs: terraform
+    environment: production
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Migrate Production Database
+        uses: actions/setup-node@v3
+        env:
+
+        with:
+          node-version: '20.x'
+        run: npm run migration:apply

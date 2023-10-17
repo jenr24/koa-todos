@@ -1,13 +1,5 @@
 import Knex from 'knex';
 
-const PG_CONNECTION_STRING = (() => {
-    if (process.env.PG_CONNECTION_STRING) {
-        return process.env.PG_CONNECTION_STRING
-    } else {
-        return ""
-    }
-});
-
 export default (() => {
     switch (process.env.APP_ENV) {
       case "DEV":
@@ -25,7 +17,7 @@ export default (() => {
         return Knex({
           client: 'pg',
           connection: {
-            connectionString: PG_CONNECTION_STRING()
+            connectionString: `postgres://${process.env.PG_USERNAME}:${process.env.PG_PASSWD}@todos:5432`,
           },
           migrations: {
             tableName: 'migrations'

@@ -118,8 +118,8 @@ module "container_definition" {
   # The environment variables to pass to the container.
   environment = [
     {
-      name  = "ENV_NAME"
-      value = "ENV_VALUE"
+      PG_USERNAME = var.pg_username
+      PG_PASSWD = var.pg_passwd
     },
   ]
 
