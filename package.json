@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.14.2"
+    "knex": "^3.0.1",
+    "koa": "^2.14.2",
+    "pg": "^8.11.3",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",
