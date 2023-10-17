@@ -103,4 +103,4 @@ jobs:
         run: npm install -D
       
       - name: Migrate Production Database
-        run: npm exec knex -- migration:latest
+        run: npm exec knex -- migrate:latest
