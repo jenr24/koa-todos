@@ -66,12 +66,12 @@ jobs:
           terraform_version: 1.4.1
 
       - name: Terraform Init
-        working-directory: ./terraform
+        working-directory: ./.terraform
         run: terraform init
 
       - name: Terraform Plan
         id: plan
-        working-directory: ./terraform
+        working-directory: ./.terraform
         run: terraform plan -var="image_tag=$GITHUB_REF_NAME"
         continue-on-error: true
 
@@ -80,5 +80,5 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        working-directory: ./terraform
+        working-directory: ./.terraform
         run: terraform apply -var="image_tag=$GITHUB_REF_NAME" -auto-approve
