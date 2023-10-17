@@ -53,6 +53,15 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   }
 }
 
+resource "aws_db_instance" "prod_database" {
+  name = "${var.namespace}-${var.stage}-${var.name}"
+  tags = {
+    Namespace = var.namespace
+    Stage     = var.stage
+    Name      = var.name
+  }
+}
+
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.35.0"

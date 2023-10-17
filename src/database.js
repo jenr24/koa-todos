@@ -1,4 +1,13 @@
 import Knex from 'knex';
+
+const PG_CONNECTION_STRING = (() => {
+    if (process.env.PG_CONNECTION_STRING) {
+        return process.env.PG_CONNECTION_STRING
+    } else {
+        return ""
+    }
+});
+
 export default (() => {
     switch (process.env.APP_ENV) {
       case "DEV":
@@ -6,6 +15,9 @@ export default (() => {
           client: 'sqlite3',
           connection: {
             filename: "./koa-todos-dev.sqlite"
+          },
+          migrations: {
+            tableName: 'migrations'
           }
         });
       case "STAGE":
@@ -13,11 +25,10 @@ export default (() => {
         return Knex({
           client: 'pg',
           connection: {
-            host: '127.0.0.1',
-            port: '5432',
-            user: undefined,
-            password: undefined,
-            database: undefined
+            connectionString: PG_CONNECTION_STRING()
+          },
+          migrations: {
+            tableName: 'migrations'
           }
         });
       default:
