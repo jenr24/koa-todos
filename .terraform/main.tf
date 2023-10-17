@@ -119,7 +119,7 @@ module "container_definition" {
   environment = [
     {
       PG_USERNAME = var.pg_username
-      PG_PASSWD = var.pg_passwd
+      PG_PASSWD = var.pg_password
     },
   ]
 
