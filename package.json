@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src -d out"
+    "build": "babel src -d out",
+    "migration:create": "knex migrate:make $MIGRATION",
+    "migration:apply": "knex migrate:up $MIGRATION"
   },
   "author": "",
   "license": "ISC",

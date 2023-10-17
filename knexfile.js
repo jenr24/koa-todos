@@ -15,6 +15,7 @@ module.exports = {
 
   development: {
     client: 'sqlite3',
+    useNullAsDefault: true,
     connection: {
       filename: './koa-todos-dev.sqlite3'
     }

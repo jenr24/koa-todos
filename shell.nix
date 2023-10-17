@@ -5,6 +5,7 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
+    export NODE_ENV=development
     source .env
   '';
 }

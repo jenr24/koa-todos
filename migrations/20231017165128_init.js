@@ -3,14 +3,14 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-  knex.schema.createSchema('koa-todos-api')
+  return knex.schema.createSchema('koa-todos-api')
     .createTable('todos', function(table) {
         table.increments();
         table.string('title');
         table.string('description');
         table.string('status');
         table.timestamps();
-    })
+    });
 };
 
 /**
@@ -18,6 +18,6 @@ exports.up = function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex) {
-    knex.schema.withSchema('koa-todos-api')
+    return knex.schema.withSchema('koa-todos-api')
         .dropTable('todos');
 };
