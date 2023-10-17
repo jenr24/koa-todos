@@ -94,10 +94,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Migrate Production Database
+      - name: Setup Node
         uses: actions/setup-node@v3
-        env:
-
         with:
           node-version: '20.x'
+      
+      - name: Migrate Production Database
         run: npm run migration:apply
