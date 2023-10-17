@@ -49,3 +49,15 @@ variable "desired_count" {
   description = "The number of instances of the task definition to place and keep running"
   default     = 1
 }
+
+variable "pg_username" {
+  sensitive = true
+  type = string
+  description = "Postgres Username"
+}
+
+variable "pg_password" {
+  sensitive = true
+  type = string
+  description = "Postgres Password"
+}

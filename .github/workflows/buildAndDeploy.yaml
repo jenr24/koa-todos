@@ -81,4 +81,4 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ./.terraform
-        run: terraform apply -var="image_tag=$GITHUB_REF_NAME" -auto-approve
+        run: terraform apply -var="image_tag=$GITHUB_REF_NAME,pg_username=$PG_USERNAME,pg_password=$PG_USERNAME" -auto-approve

@@ -53,13 +53,27 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   }
 }
 
-resource "aws_db_instance" "prod_database" {
-  name = "${var.namespace}-${var.stage}-${var.name}"
+resource "aws_db_parameter_group" "default" {
+  name = "postgres"
+  family = "postgres15"
+}
+
+resource "aws_db_instance" "production_database" {
   tags = {
     Namespace = var.namespace
     Stage     = var.stage
     Name      = var.name
   }
+
+  allocated_storage    = 10
+  db_name              = "todos"
+  engine               = "postgres"
+  engine_version       = "15.4"
+  instance_class       = "db.t3.micro"
+  skip_final_snapshot  = true
+  parameter_group_name = "postgres"
+  username             = var.pg_username
+  password             = var.pg_password
 }
 
 module "ecr" {
