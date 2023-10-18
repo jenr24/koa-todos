@@ -58,6 +58,16 @@ resource "aws_db_parameter_group" "default" {
   family = "postgres15"
 }
 
+resource "aws_db_subnet_group" "default" {
+  name = "main"
+  subnet_ids = module.subnets.public_subnet_ids
+  tags = {
+    Namespace = var.namespace
+    Stage     = var.stage
+    Name      = var.name
+  }
+}
+
 resource "aws_db_instance" "production_database" {
   tags = {
     Namespace = var.namespace
@@ -66,6 +76,7 @@ resource "aws_db_instance" "production_database" {
   }
 
   allocated_storage    = 10
+  db_subnet_group_name = aws_db_subnet_group.default.name
   db_name              = "todos"
   engine               = "postgres"
   engine_version       = "15.4"
@@ -74,6 +85,71 @@ resource "aws_db_instance" "production_database" {
   parameter_group_name = "postgres"
   username             = var.pg_username
   password             = var.pg_password
+
+  vpc_security_group_ids = [module.aws_db_security_group.id]
+}
+
+module "aws_db_security_group" {
+  source = "cloudposse/security-group/aws"
+  
+  allow_all_egress = true
+
+  rule_matrix = [{
+    key = "stable"
+    # Allow ingress on ports 22 and 80 from created security group, existing security group, and CIDR "10.0.0.0/8"
+    # The dynamic value for source_security_group_ids breaks Terraform 0.13 but should work in 0.14 or later
+    source_security_group_ids = [aws_security_group.target[0].id]
+    # Either dynamic value for CIDRs breaks Terraform 0.13 but should work in 0.14 or later
+    # In TF 0.14 and later (through 1.0.x) if the length of the cidr_blocks
+    # list is not available at plan time, the module breaks.
+    cidr_blocks      = ["10.0.0.0/16"]
+    ipv6_cidr_blocks = [module.vpc.vpc_ipv6_cidr_block]
+    prefix_list_ids  = []
+
+    rules = [
+      {
+        key         = "db"
+        type        = "ingress"
+        from_port   = 5432
+        to_port     = 5432
+        protocol    = "tcp"
+        description = "Allow DB access"
+      },
+    ]
+  }]
+  rules_map = merge({ new-cidr = [
+    {
+      key                      = "db-cidr"
+      type                     = "ingress"
+      from_port                = 5432
+      to_port                  = 5442
+      protocol                 = "tcp"
+      cidr_blocks              = ["10.0.0.0/16"]
+      ipv6_cidr_blocks         = [module.vpc.vpc_ipv6_cidr_block] # ["::/0"] #
+      source_security_group_id = null
+      description              = "Discrete HTTPS ingress by CIDR"
+      self                     = false
+    }]
+  })
+
+
+  vpc_id = module.vpc.vpc_id
+
+  security_group_create_timeout = "5m"
+  security_group_delete_timeout = "2m"
+
+  security_group_name = [format("%s-%s-%s", var.namespace, var.stage, var.name)]
+}
+
+resource "aws_security_group" "target" {
+  name_prefix = format("%s-%s-", var.namespace, var.stage)
+  count = 1
+  vpc_id      = module.vpc.vpc_id
+  tags = {
+    Namespace = var.namespace
+    Stage     = var.stage
+    Name      = var.name
+  }
 }
 
 module "ecr" {

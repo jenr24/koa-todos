@@ -16,7 +16,11 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      connectionString: `postgres://${process.env.TF_VAR_PG_USERNAME}:${process.env.TF_VAR_PG_PASSWD}@todos:5432`,
+      host: 'terraform-20231017184024200600000001.cko0t6ezl5s0.us-east-2.rds.amazonaws.com',
+      port: 5432,
+      user: process.env.TF_VAR_PG_USERNAME,
+      password: process.env.TF_VAR_PG_PASSWD,
+      database: 'todos'
     },
     pool: {
       min: 2,
@@ -30,7 +34,11 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      connectionString: `postgres://${process.env.TF_VAR_PG_USERNAME}:${process.env.TF_VAR_PG_PASSWD}@terraform-20231017184024200600000001.cko0t6ezl5s0.us-east-2.rds.amazonaws.com:5432/todos`,
+      host: process.env.PG_HOST,
+      port: 5432,
+      user: process.env.PG_USERNAME,
+      password: process.env.PG_PASSWD,
+      database: 'todos'
     },
     pool: {
       min: 2,
