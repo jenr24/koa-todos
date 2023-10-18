@@ -85,6 +85,7 @@ resource "aws_db_instance" "production_database" {
   parameter_group_name = "postgres"
   username             = var.pg_username
   password             = var.pg_password
+  publicly_accessible  = true
 
   vpc_security_group_ids = [module.aws_db_security_group.id]
 }
